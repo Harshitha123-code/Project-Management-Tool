@@ -1,0 +1,347 @@
+PROJECT TITLE:
+TaskFlow AI
+
+PROJECT TYPE:
+Full Stack Web Application
+
+DOMAIN:
+Project Management System
+
+Save file.
+
+STEP 4 — Write Project Objective
+
+Add this below:
+
+OBJECTIVE:
+
+To develop a full stack project management web application that helps users create projects, manage tasks, track progress, and improve productivity.
+
+Save file.
+
+STEP 5 — Write Main Features
+
+Add this:
+
+MAIN FEATURES:
+
+1. User Authentication
+2. Dashboard
+3. Project Management
+4. Task Management
+5. Task Status Tracking
+6. Responsive UI
+
+Save file.
+
+STEP 6 — Write Authentication Features
+
+Add this:
+
+AUTHENTICATION FEATURES:
+
+1. User Signup
+2. User Login
+3. User Logout
+4. JWT Authentication
+
+Save file.
+
+STEP 7 — Write Project Features
+
+Add this:
+
+PROJECT FEATURES:
+
+1. Create Project
+2. Edit Project
+3. Delete Project
+4. View Projects
+
+Save file.
+
+STEP 8 — Write Task Features
+
+Add this:
+
+TASK FEATURES:
+
+1. Create Task
+2. Update Task
+3. Delete Task
+4. Change Task Status
+5. Assign Priority
+6. Set Due Date
+
+Save file.
+
+STEP 9 — Write Task Workflow
+
+Add this:
+
+TASK WORKFLOW:
+
+To Do → In Progress → Completed
+
+Save file.
+
+STEP 10 — Write Application Flow
+
+Add this:
+
+APPLICATION FLOW:
+
+1. User opens application
+2. User signs up
+3. User logs in
+4. Dashboard opens
+5. User creates project
+6. User creates tasks
+7. User updates task status
+8. Dashboard updates automatically
+
+Save file.
+
+STEP 11 — Write Required Pages
+
+Add this:
+
+REQUIRED PAGES:
+
+1. Login Page
+2. Register Page
+3. Dashboard Page
+4. Projects Page
+5. Tasks Page
+6. Profile Page
+
+Save file.
+
+STEP 12 — Write Frontend Components
+
+Add this:
+
+FRONTEND COMPONENTS:
+
+1. Navbar
+2. Sidebar
+3. Project Card
+4. Task Card
+5. Dashboard Statistics
+6. Forms
+7. Buttons
+
+Save file.
+
+STEP 13 — Write Database Collections
+
+Add this:
+
+DATABASE COLLECTIONS:
+
+1. Users
+2. Projects
+3. Tasks
+
+Save file.
+
+STEP 14 — Write User Schema
+
+Add this:
+
+USERS COLLECTION:
+
+{
+  name,
+  email,
+  password
+}
+
+Save file.
+
+STEP 15 — Write Project Schema
+
+Add this:
+
+PROJECTS COLLECTION:
+
+{
+  title,
+  description,
+  createdBy
+}
+
+Save file.
+
+STEP 16 — Write Task Schema
+
+Add this:
+
+TASKS COLLECTION:
+
+{
+  title,
+  description,
+  priority,
+  status,
+  dueDate,
+  projectId
+}
+
+Save file.
+
+STEP 17 — Write API Endpoints
+
+Add this:
+
+AUTH APIs:
+
+POST /register
+POST /login
+
+PROJECT APIs:
+
+GET /projects
+POST /projects
+PUT /projects/:id
+DELETE /projects/:id
+
+TASK APIs:
+
+GET /tasks
+POST /tasks
+PUT /tasks/:id
+DELETE /tasks/:id
+
+Save file.
+
+STEP 18 — Write Tech Stack
+
+Add this:
+
+TECH STACK:
+
+Frontend:
+React.js
+
+Styling:
+Tailwind CSS
+
+Backend:
+Node.js + Express.js
+
+Database:
+MongoDB
+
+Authentication:
+JWT
+
+Save file.
+
+STEP 19 — Write Folder Structure
+
+Add this:
+
+PROJECT STRUCTURE:
+
+taskflow-ai/
+│
+├── client/
+│
+└── server/
+
+Save file.
+
+STEP 20 — Write Frontend Structure
+
+Add this:
+
+FRONTEND STRUCTURE:
+
+client/src/
+│
+├── components/
+├── pages/
+├── services/
+├── routes/
+├── context/
+└── utils/
+
+Save file.
+
+STEP 21 — Write Backend Structure
+
+Add this:
+
+BACKEND STRUCTURE:
+
+server/
+│
+├── models/
+├── routes/
+├── controllers/
+├── middleware/
+├── config/
+└── utils/
+
+Save file.
+
+STEP 22 — Write Dashboard Layout
+
+Add this:
+
+DASHBOARD FEATURES:
+
+1. Total Projects
+2. Total Tasks
+3. Completed Tasks
+4. Pending Tasks
+5. Recent Projects
+6. Task Summary
+
+Save file.
+
+STEP 23 — Write Task Board Layout
+
+Add this:
+
+TASK BOARD:
+
+To Do | In Progress | Completed
+
+Save file.
+
+STEP 24 — Write MVP Features
+
+Add this:
+
+MINIMUM VIABLE PRODUCT:
+
+1. Authentication
+2. Dashboard
+3. Projects CRUD
+4. Tasks CRUD
+5. MongoDB Connection
+6. Responsive UI
+
+Save file.
+
+STEP 25 — Write Development Timeline
+
+Add this:
+
+DEVELOPMENT PLAN:
+
+DAY 1:
+Planning + Setup
+
+DAY 2:
+Authentication + Projects Module
+
+DAY 3:
+Tasks Module + Dashboard
+
+DAY 4:
+Deployment + Documentation + Bug Fixes
+
+Save file.
