@@ -3,6 +3,7 @@ import axios from "axios";
 const API_URL =
   "http://localhost:5000/api/tasks";
 
+// CREATE TASK
 export const createTask = async (
   taskData
 ) => {
@@ -15,6 +16,7 @@ export const createTask = async (
   return response.data;
 };
 
+// GET TASKS
 export const getTasks = async () => {
 
   const response = await axios.get(
@@ -22,8 +24,9 @@ export const getTasks = async () => {
   );
 
   return response.data;
-}
+};
 
+// UPDATE TASK STATUS
 export const updateTaskStatus = async (
   taskId,
   status
@@ -32,6 +35,18 @@ export const updateTaskStatus = async (
   const response = await axios.put(
     `${API_URL}/${taskId}`,
     { status }
+  );
+
+  return response.data;
+};
+
+// DELETE TASK
+export const deleteTask = async (
+  taskId
+) => {
+
+  const response = await axios.delete(
+    `${API_URL}/${taskId}`
   );
 
   return response.data;

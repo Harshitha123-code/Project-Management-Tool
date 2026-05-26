@@ -1,17 +1,28 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  useNavigate,
+} from "react-router-dom";
 
 import {
   createProject,
   getProjects,
+  deleteProject,
 } from "../services/projectService";
 
 import {
   createTask,
   getTasks,
   updateTaskStatus,
+  deleteTask,
 } from "../services/taskService";
 
 function Dashboard() {
+
+  const navigate = useNavigate();
 
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -77,6 +88,7 @@ function Dashboard() {
 
   // CREATE PROJECT
   const handleProjectSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
@@ -99,6 +111,7 @@ function Dashboard() {
 
   // CREATE TASK
   const handleTaskSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
@@ -121,291 +134,408 @@ function Dashboard() {
     }
   };
 
+  // UPDATE STATUS
   const handleStatusChange = async (
-  taskId,
-  status
-) => {
+    taskId,
+    status
+  ) => {
 
-  try {
+    try {
 
-    await updateTaskStatus(
-      taskId,
-      status
-    );
+      await updateTaskStatus(
+        taskId,
+        status
+      );
 
-    fetchTasks();
+      fetchTasks();
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // DELETE TASK
+  const handleDeleteTask = async (
+    taskId
+  ) => {
+
+    try {
+
+      await deleteTask(taskId);
+
+      fetchTasks();
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // DELETE PROJECT
+  const handleDeleteProject = async (
+    projectId
+  ) => {
+
+    try {
+
+      await deleteProject(projectId);
+
+      fetchProjects();
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // LOGOUT
+  const handleLogout = () => {
+
+    localStorage.removeItem("token");
+
+    navigate("/");
+  };
 
   return (
-    <div className="min-h-screen bg-black text-white p-10">
 
-      <h1 className="text-4xl font-bold text-cyan-400 mb-10">
-        Dashboard
-      </h1>
+    <div className="min-h-screen bg-black text-white flex">
 
-      <div className="grid grid-cols-4 gap-6 mb-10">
+      {/* SIDEBAR */}
+      <div className="w-64 bg-gray-950 p-6">
 
-  <div className="bg-gray-900 p-6 rounded-lg">
-    <h2 className="text-xl">
-      Total Projects
-    </h2>
+        <h1 className="text-3xl font-bold text-cyan-400 mb-10">
+          TaskFlow AI
+        </h1>
 
-    <p className="text-3xl mt-4 text-cyan-400">
-      {projects.length}
-    </p>
-  </div>
+        <ul className="space-y-6 text-lg">
 
-  <div className="bg-gray-900 p-6 rounded-lg">
-    <h2 className="text-xl">
-      Total Tasks
-    </h2>
+          <li className="text-cyan-400">
+            Dashboard
+          </li>
 
-    <p className="text-3xl mt-4 text-cyan-400">
-      {tasks.length}
-    </p>
-  </div>
+          <li>
+            Projects
+          </li>
 
-  <div className="bg-gray-900 p-6 rounded-lg">
-    <h2 className="text-xl">
-      Completed
-    </h2>
+          <li>
+            Tasks
+          </li>
 
-    <p className="text-3xl mt-4 text-green-400">
-      {
-        tasks.filter(
-          (task) =>
-            task.status === "Completed"
-        ).length
-      }
-    </p>
-  </div>
+          <li>
+            Analytics
+          </li>
 
-  <div className="bg-gray-900 p-6 rounded-lg">
-    <h2 className="text-xl">
-      Pending
-    </h2>
+        </ul>
 
-    <p className="text-3xl mt-4 text-yellow-400">
-      {
-        tasks.filter(
-          (task) =>
-            task.status !== "Completed"
-        ).length
-      }
-    </p>
-  </div>
+      </div>
 
-</div>
+      {/* MAIN CONTENT */}
+      <div className="flex-1 p-10 overflow-y-auto h-screen">
 
-      {/* PROJECT FORM */}
-      <div className="bg-gray-900 p-6 rounded-lg mb-10">
+        {/* TOPBAR */}
+        <div className="bg-gray-900 p-6 rounded-2xl shadow-lg flex justify-between items-center mb-10">
 
-        <h2 className="text-2xl mb-4">
-          Create Project
-        </h2>
-
-        <form
-          onSubmit={handleProjectSubmit}
-          className="space-y-4"
-        >
-
-          <input
-            type="text"
-            name="title"
-            placeholder="Project Title"
-            value={projectForm.title}
-            onChange={handleProjectChange}
-            className="w-full p-3 rounded bg-gray-800"
-          />
-
-          <textarea
-            name="description"
-            placeholder="Project Description"
-            value={projectForm.description}
-            onChange={handleProjectChange}
-            className="w-full p-3 rounded bg-gray-800"
-          />
+          <h1 className="text-4xl font-bold text-cyan-400">
+            Dashboard
+          </h1>
 
           <button
-            className="bg-cyan-500 px-6 py-3 rounded"
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 transition px-6 py-3 rounded-xl"
           >
+            Logout
+          </button>
+
+        </div>
+
+        {/* ANALYTICS */}
+        <div className="grid grid-cols-4 gap-6 mb-10">
+
+          <div className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:scale-105 transition duration-300">
+
+            <h2 className="text-xl">
+              Total Projects
+            </h2>
+
+            <p className="text-3xl mt-4 text-cyan-400">
+              {projects.length}
+            </p>
+
+          </div>
+
+          <div className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:scale-105 transition duration-300">
+
+            <h2 className="text-xl">
+              Total Tasks
+            </h2>
+
+            <p className="text-3xl mt-4 text-cyan-400">
+              {tasks.length}
+            </p>
+
+          </div>
+
+          <div className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:scale-105 transition duration-300">
+
+            <h2 className="text-xl">
+              Completed
+            </h2>
+
+            <p className="text-3xl mt-4 text-green-400">
+              {
+                tasks.filter(
+                  (task) =>
+                    task.status === "Completed"
+                ).length
+              }
+            </p>
+
+          </div>
+
+          <div className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:scale-105 transition duration-300">
+
+            <h2 className="text-xl">
+              Pending
+            </h2>
+
+            <p className="text-3xl mt-4 text-yellow-400">
+              {
+                tasks.filter(
+                  (task) =>
+                    task.status !== "Completed"
+                ).length
+              }
+            </p>
+
+          </div>
+
+        </div>
+
+        {/* CREATE PROJECT */}
+        <div className="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10">
+
+          <h2 className="text-2xl mb-4">
             Create Project
-          </button>
+          </h2>
 
-        </form>
+          <form
+            onSubmit={handleProjectSubmit}
+            className="space-y-4"
+          >
 
-      </div>
+            <input
+              type="text"
+              name="title"
+              placeholder="Project Title"
+              value={projectForm.title}
+              onChange={handleProjectChange}
+              className="w-full p-3 rounded-xl bg-gray-800"
+            />
 
-      {/* TASK FORM */}
-      <div className="bg-gray-900 p-6 rounded-lg mb-10">
+            <textarea
+              name="description"
+              placeholder="Project Description"
+              value={projectForm.description}
+              onChange={handleProjectChange}
+              className="w-full p-3 rounded-xl bg-gray-800"
+            />
 
-        <h2 className="text-2xl mb-4">
-          Create Task
+            <button
+              className="bg-cyan-500 hover:bg-cyan-600 transition px-6 py-3 rounded-xl"
+            >
+              Create Project
+            </button>
+
+          </form>
+
+        </div>
+
+        {/* CREATE TASK */}
+        <div className="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10">
+
+          <h2 className="text-2xl mb-4">
+            Create Task
+          </h2>
+
+          <form
+            onSubmit={handleTaskSubmit}
+            className="space-y-4"
+          >
+
+            <input
+              type="text"
+              name="title"
+              placeholder="Task Title"
+              value={taskForm.title}
+              onChange={handleTaskChange}
+              className="w-full p-3 rounded-xl bg-gray-800"
+            />
+
+            <textarea
+              name="description"
+              placeholder="Task Description"
+              value={taskForm.description}
+              onChange={handleTaskChange}
+              className="w-full p-3 rounded-xl bg-gray-800"
+            />
+
+            <select
+              name="priority"
+              value={taskForm.priority}
+              onChange={handleTaskChange}
+              className="w-full p-3 rounded-xl bg-gray-800"
+            >
+
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+
+            </select>
+
+            <select
+              name="projectId"
+              value={taskForm.projectId}
+              onChange={handleTaskChange}
+              className="w-full p-3 rounded-xl bg-gray-800"
+            >
+
+              <option value="">
+                Select Project
+              </option>
+
+              {projects.map((project) => (
+                <option
+                  key={project._id}
+                  value={project._id}
+                >
+                  {project.title}
+                </option>
+              ))}
+
+            </select>
+
+            <button
+              className="bg-cyan-500 hover:bg-cyan-600 transition px-6 py-3 rounded-xl"
+            >
+              Create Task
+            </button>
+
+          </form>
+
+        </div>
+
+        {/* PROJECTS */}
+        <h2 className="text-3xl mb-6">
+          Projects
         </h2>
 
-        <form
-          onSubmit={handleTaskSubmit}
-          className="space-y-4"
-        >
+        <div className="grid grid-cols-3 gap-6 mb-12">
 
-          <input
-            type="text"
-            name="title"
-            placeholder="Task Title"
-            value={taskForm.title}
-            onChange={handleTaskChange}
-            className="w-full p-3 rounded bg-gray-800"
-          />
+          {projects.map((project) => (
 
-          <textarea
-            name="description"
-            placeholder="Task Description"
-            value={taskForm.description}
-            onChange={handleTaskChange}
-            className="w-full p-3 rounded bg-gray-800"
-          />
+            <div
+              key={project._id}
+              className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:scale-105 transition duration-300"
+            >
 
-          <select
-            name="priority"
-            value={taskForm.priority}
-            onChange={handleTaskChange}
-            className="w-full p-3 rounded bg-gray-800"
-          >
-
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
-
-          </select>
-
-          <select
-            name="projectId"
-            value={taskForm.projectId}
-            onChange={handleTaskChange}
-            className="w-full p-3 rounded bg-gray-800"
-          >
-
-            <option value="">
-              Select Project
-            </option>
-
-            {projects.map((project) => (
-              <option
-                key={project._id}
-                value={project._id}
-              >
+              <h2 className="text-2xl font-bold mb-2">
                 {project.title}
-              </option>
-            ))}
+              </h2>
 
-          </select>
+              <p className="text-gray-400">
+                {project.description}
+              </p>
 
-          <button
-            className="bg-cyan-500 px-6 py-3 rounded"
-          >
-            Create Task
-          </button>
+              <button
+                onClick={() =>
+                  handleDeleteProject(
+                    project._id
+                  )
+                }
+                className="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded-xl mt-4"
+              >
+                Delete Project
+              </button>
 
-        </form>
+            </div>
 
-      </div>
+          ))}
 
-      {/* PROJECTS */}
-      <h2 className="text-3xl mb-6">
-        Projects
-      </h2>
+        </div>
 
-      <div className="grid grid-cols-3 gap-6 mb-12">
+        {/* TASKS */}
+        <h2 className="text-3xl mb-6">
+          Tasks
+        </h2>
 
-        {projects.map((project) => (
+        <div className="grid grid-cols-3 gap-6">
 
-          <div
-            key={project._id}
-            className="bg-gray-900 p-6 rounded-lg"
-          >
+          {tasks.map((task) => (
 
-            <h2 className="text-2xl font-bold mb-2">
-              {project.title}
-            </h2>
+            <div
+              key={task._id}
+              className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:scale-105 transition duration-300"
+            >
 
-            <p className="text-gray-400">
-              {project.description}
-            </p>
+              <h2 className="text-2xl font-bold mb-2">
+                {task.title}
+              </h2>
 
-          </div>
+              <p className="text-gray-400 mb-3">
+                {task.description}
+              </p>
 
-        ))}
+              <p className="mb-2">
+                Priority:
+                <span className="text-cyan-400 ml-2">
+                  {task.priority}
+                </span>
+              </p>
 
-      </div>
+              <div className="mb-3">
 
-      {/* TASKS */}
-      <h2 className="text-3xl mb-6">
-        Tasks
-      </h2>
+                <p className="mb-2">
+                  Status:
+                </p>
 
-      <div className="grid grid-cols-3 gap-6">
+                <select
+                  value={task.status}
+                  onChange={(e) =>
+                    handleStatusChange(
+                      task._id,
+                      e.target.value
+                    )
+                  }
+                  className="bg-gray-800 p-2 rounded-xl"
+                >
 
-        {tasks.map((task) => (
+                  <option>To Do</option>
+                  <option>In Progress</option>
+                  <option>Completed</option>
 
-          <div
-            key={task._id}
-            className="bg-gray-900 p-6 rounded-lg"
-          >
+                </select>
 
-            <h2 className="text-2xl font-bold mb-2">
-              {task.title}
-            </h2>
+              </div>
 
-            <p className="text-gray-400 mb-3">
-              {task.description}
-            </p>
+              <p>
+                Project:
+                <span className="text-yellow-400 ml-2">
+                  {task.projectId?.title}
+                </span>
+              </p>
 
-            <p className="mb-2">
-              Priority:
-              <span className="text-cyan-400 ml-2">
-                {task.priority}
-              </span>
-            </p>
+              <button
+                onClick={() =>
+                  handleDeleteTask(task._id)
+                }
+                className="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded-xl mt-4"
+              >
+                Delete Task
+              </button>
 
-            <div className="mb-3">
+            </div>
 
-  <p className="mb-2">
-    Status:
-  </p>
+          ))}
 
-  <select
-    value={task.status}
-    onChange={(e) =>
-      handleStatusChange(
-        task._id,
-        e.target.value
-      )
-    }
-    className="bg-gray-800 p-2 rounded"
-  >
-
-    <option>To Do</option>
-    <option>In Progress</option>
-    <option>Completed</option>
-
-  </select>
-
-</div>
-
-            <p>
-              Project:
-              <span className="text-yellow-400 ml-2">
-                {task.projectId?.title}
-              </span>
-            </p>
-
-          </div>
-
-        ))}
+        </div>
 
       </div>
 

@@ -23,3 +23,13 @@ export const getProjects = async () => {
 
   return response.data;
 };
+export const deleteProject = async (
+  projectId
+) => {
+
+  const response = await axios.delete(
+    `${API_URL}/${projectId}`
+  );
+
+  return response.data;
+};
